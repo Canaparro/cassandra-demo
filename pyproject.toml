@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "cassandra-demo"
+version = "0.1.0"
+description = ""
+authors = ["canaparro <marcelo.canaparro@pagefreezer.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+cassandra-driver = "^3.29.0"
+testcontainers-core = "^0.0.1rc1"
+testcontainers-redis = "^0.0.1rc1"
+docker = "^7.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
