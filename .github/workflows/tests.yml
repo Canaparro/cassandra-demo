@@ -1,0 +1,39 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+env:
+  PYTHON_VERSION: 3.9
+  POETRY_VERSION: 1.4
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install poetry
+        run: pipx install poetry==${{ env.POETRY_VERSION }}
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'poetry'
+
+      - name: Install apt packages
+        run: |
+          sudo apt update
+          sudo apt install -y --no-install-recommends libssl-dev libcurl4-openssl-dev libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 libffi-dev libjpeg-dev libopenjp2-7-dev
+
+      - name: Install Dependencies
+        run: |
+          export CASS_DRIVER_NO_CYTHON=1
+          poetry config virtualenvs.in-project true
+          poetry install --no-interaction --no-ansi
+
+      - name: Run Tests
+        run: poetry run pytest

@@ -11,7 +11,7 @@ class AsyncBaseModel(Model):
     @classmethod
     async def async_query(cls):
         prepared_statement = cls.prepare_statement()
-        cassandra_future: ResponseFuture = cls._session.execute_async(prepared_statement)
+        cassandra_future: ResponseFuture = cls._session().execute_async(prepared_statement)
 
         future_response = asyncio.Future()
         cassandra_future.add_errback(cls._exception_handler, future_response)
@@ -29,7 +29,7 @@ class AsyncBaseModel(Model):
     @classmethod
     def prepare_statement(cls):
         query = f"SELECT * from {cls._get_keyspace()}.{cls._table_name}"
-        prepared_statement = cls._session.prepare(query)
+        prepared_statement = cls._session().prepare(query)
         return prepared_statement
 
     def _success_handler(result, future_response: Future, cassandra_future):

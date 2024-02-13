@@ -9,8 +9,8 @@ readme = "README.md"
 python = "^3.9"
 cassandra-driver = "^3.29.0"
 testcontainers-core = "^0.0.1rc1"
-testcontainers-redis = "^0.0.1rc1"
 docker = "^7.0.0"
+pytest = "^8.0.0"
 
 
 [build-system]
